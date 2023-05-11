@@ -16,3 +16,4 @@ Output:
 [ 1, 2, 3, 4, 5 ]
 ```
 However, if you do not wish this global << operator you can change the defined value COUT_OPERATOR from true to false in Array.h, line 7.
+more of documentation soon...
