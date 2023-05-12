@@ -95,5 +95,21 @@ Output:
 6) 13
 ```
 
-## Initializer_list instead of multiple argument in functions splice(), push(), unshift()
-I'll finish the rest of documentation tommorow
+## Initializer_list instead of multiple arguments in functions splice(), push(), unshift()
+Functions splice(), push(), unshift() in JavaScript take multiple arguments which are not present in C++ so i made it that they take initializer list as one of the arguments. Let's look at this example:
+```cpp
+Array<int> numbers {1, 2, 3, 4, 5};
+
+numbers.push(6); // Push an element at the end of an Array
+numbers.push( {7, 8, 9} ); // Everything inside of {} is type of std::initializer_list
+
+numbers.unshift(0); // Push an element at the beginning of an Array
+numbers.unshift( {-3, -2, -1} );
+
+numbers.splice(3, 1, 20); // Remove element at index 3 and insert new element with value 20
+numbers.splice(4, 5, {6, 9, 4, 2, 0}); // Remove 5 elements and insert new 5 elements at index 0
+
+cout << numbers << endl;
+```
+
+That is all of the documentation, happy coding :).
