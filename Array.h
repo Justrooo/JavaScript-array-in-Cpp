@@ -227,15 +227,17 @@ template<typename T>
 Array<T> Array<T>::splice(std::size_t starting_pos, std::size_t delete_count) const
 {
 	if (delete_count == std::string::npos) delete_count = array.size();
-	if (starting_pos < delete_count && starting_pos < array.size() && delete_count <= array.size())
+	if (starting_pos < array.size() && delete_count + starting_pos <= array.size())
 	{
-		Array<T> result = *this;
-		for (int i = starting_pos; i < delete_count; i++)
+		Array<T> result;
+		for (int i = 0; i < array.size(); i++)
 		{
-			if(array.size() != 0) result.shift();
+			if (i < starting_pos || i >= starting_pos + delete_count) result.array.push_back(array[i]);
 		}
 		return result;
 	}
+	else if (array.empty())
+		throw std::out_of_range{ "Cannot do operations on an empty Array." };
 	else
 		throw std::out_of_range{ "Index out of range." };
 }
@@ -244,7 +246,7 @@ template<typename T>
 Array<T> Array<T>::splice(std::size_t starting_pos, std::size_t delete_count, const T& value)
 {
 	if (delete_count == std::string::npos) delete_count = array.size();
-	if (starting_pos <= delete_count && starting_pos < array.size() && delete_count <= array.size() && starting_pos + delete_count <= array.size())
+	if (starting_pos < array.size() && delete_count <= array.size() && starting_pos + delete_count <= array.size())
 	{
 		Array<T> result;
 		Array<T> result2;
@@ -350,23 +352,21 @@ template<typename T>
 T Array<T>::pop()
 {
 	if (array.empty()) throw std::out_of_range{"Cannot do operations on an empty Array."};
-	T last = array[array.size() - 1];
 	array.pop_back();
-	return last;
+	return array[array.size() - 1];;
 }
 /***********************************************************************************************************************//***********************************************************************************************************************/
 template<typename T>
 T Array<T>::shift()
 {
 	if (array.empty()) throw std::out_of_range{ "Cannot do operations on an empty Array." };
-	T first = array[0];
 	Array result;
 	for (int i = 0; i < array.size() - 1; i++)
 	{
 		result.array.push_back(array[i + 1]);
 	}
 	array = result.array;
-	return first;
+	return array[0];
 }
 /***********************************************************************************************************************//***********************************************************************************************************************/
 template<typename T>
