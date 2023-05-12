@@ -23,8 +23,8 @@ public:
 	private:
 		T* ptr;
 	};
-	auto /* Thank God for the auto keyword */ begin() const { return array.begin(); } 
-	auto /* Thank God for the auto keyword */ end() const { return array.end(); }
+	auto /* Thank God for the auto and decltype keyword */ begin() -> decltype(array.begin()) const { return array.begin(); } 
+	auto /* Thank God for the auto and decltype keyword */ end() -> decltype(array.begin()) const { return array.end(); }
 
 	Array(std::initializer_list<T> values); // Construct Array of initializer_list eg. Array<char> array {'a', 'b', 'c', 'd'} (vector-like behavior)
 	Array(const int value_count, const T& value); // Construct Array of value_count elements, all of them are value eg. Array<char> array(4, 'X') ---> vector of {'X', 'X', 'X', 'X'}
