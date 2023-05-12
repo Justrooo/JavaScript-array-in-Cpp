@@ -33,10 +33,28 @@ public:
 
 	// Overloaded operators
 #if (COUT_OPERATOR == true)
-	template <typename T>
-	friend std::ostream& operator<<(std::ostream& cout, const Array<T>& array) noexcept;
-	template <typename T>
-	friend std::ostream& operator<<(std::ostream& cout, const Array<T>&& array) noexcept;
+	friend std::ostream& operator<< (std::ostream& cout, const Array<T>& array) noexcept
+	{
+		if (array.array.empty()) return cout << "[]";
+		cout << "[ ";
+		for (int i = 0; i < array.array.size() - 1; i++)
+		{
+			cout << array.array[i] << ", ";
+		}
+		cout << array.array[array.array.size() - 1] << " ]";
+		return cout;
+	}
+	friend std::ostream& operator<< (std::ostream& cout, const Array<T>&& array) noexcept
+	{
+		if (array.array.empty()) return cout << "[]";
+		cout << "[ ";
+		for (int i = 0; i < array.array.size() - 1; i++)
+		{
+			cout << array.array[i] << ", ";
+		}
+		cout << array.array[array.array.size() - 1] << " ]";
+		return cout;
+	}
 #endif
 
 	Array<T> operator+(const Array& array) const; // same as concat()
@@ -73,35 +91,6 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Overloaded << operator for Array
-#if (COUT_OPERATOR == true)
-template <typename T>
-std::ostream& operator<<(std::ostream& cout, const Array<T>& array) noexcept
-{
-	if (array.array.empty()) return cout << "[]";
-	cout << "[ ";
-	for (int i = 0; i < array.array.size() - 1; i++)
-	{
-		cout << array.array[i] << ", ";
-	}
-	cout << array.array[array.array.size() - 1] << " ]";
-	return cout;
-}
-/***********************************************************************************************************************/
-template <typename T>
-std::ostream& operator<<(std::ostream& cout, const Array<T>&& array) noexcept
-{
-	if (array.array.empty()) return cout << "[]";
-	cout << "[ ";
-	for (int i = 0; i < array.array.size() - 1; i++)
-	{
-		cout << array.array[i] << ", ";
-	}
-	cout << array.array[array.array.size() - 1] << " ]";
-	return cout;
-}
-/***********************************************************************************************************************/
-#endif
 template<typename T>
 void Array<T>::quicksort(int left, int right) noexcept
 {
